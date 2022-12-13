@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Admin page</title>
+</head>
+<body>
+<p><a th:href="@{admin/user}">My page</a></p>
+<p><a th:href="@{/admin/new}">Add new user</a></p>
+<h3>Users list:</h3>
+<table>
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Username</th>
+        <th scope="col">First name</th>
+        <th scope="col">Last name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Age</th>
+        <th scope="col">Roles</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+    <tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${usersList}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.firstName}"></td>
+        <td th:text="${user.lastName}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.age}"></td>
+        <td>
+            <th:block th:each="role : ${user.roles}">
+                <label th:text="${role.authority}"></label>
+            </th:block>
+        </td>
+        <td>
+            <form th:action="@{/admin/edit/{id}(id=${user.id})}"
+                  th:method="GET"
+                  th:object="${user}">
+                <button type="submit">Edit</button>
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/admin/delete/{id}(id=${user.id})}"
+                  th:method="DELETE"
+                  th:object="${user}">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    <tbody>
+</table>
+<hr>
+<form th:action="@{/logout}" method="POST">
+    <button type="submit">Logout</button>
+</form>
+</body>
+</html>

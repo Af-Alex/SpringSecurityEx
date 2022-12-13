@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit user</title>
+</head>
+<body>
+<p>
+<h1>Edit User</h1></p>
+<form th:action="@{/admin/edit/{id}(id=${user.id})}" th:method="PUT" th:object="${user}">
+
+    <label for="username">Username</label>
+    <input th:value="*{username}"
+           th:field="*{username}"
+           th:type="text"
+           id="username"
+           required/>
+    <br>
+    <label for="firstName">First name</label>
+    <input th:value="*{firstName}"
+           th:field="*{firstName}"
+           th:type="text"
+           id="firstName"
+           required/>
+    <br>
+    <label for="lastName">Last name</label>
+    <input th:value="*{lastName}"
+           th:field="*{lastName}"
+           th:type="text"
+           id="lastName"
+           required/>
+    <br>
+    <label for="age">Age</label>
+    <input th:value="*{age}"
+           th:field="*{age}"
+           th:type="number"
+           id="age"/>
+    <br>
+    <label for="email">Email</label>
+    <input th:value="*{email}"
+           th:field="*{email}"
+           th:type="email"
+           id="email"
+           required/>
+    <br>
+    <label for="password">Password</label>
+    <input th:value="*{password}"
+           th:field="*{password}"
+           th:type="password"
+           id="password"/>
+    <br>
+    <label for="roles">Role</label>
+    <select multiple id="roles" name="roles" size="2" required>
+        <option th:each="role : ${roles}"
+                th:text="${role.name}"
+                th:value="${role.id}"
+                th:selected="${user.roles.containsAll(role)}">
+        </option>
+    </select><br>
+    <button type="submit">Confirm</button>
+</form>
+<a th:href="@{/admin}">
+    <button>Go back</button>
+</a>
+<hr>
+<form th:action="@{/logout}" method="POST">
+    <button type="submit">Logout</button>
+</form>
+</body>
+</html>
