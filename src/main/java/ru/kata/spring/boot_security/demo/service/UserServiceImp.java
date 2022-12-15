@@ -1,8 +1,6 @@
 package ru.kata.spring.boot_security.demo.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,7 +18,6 @@ public class UserServiceImp implements UserService, UserDetailsService {
     private final UserDao userDao;
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
     public UserServiceImp(UserDao userDao, @Lazy PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
@@ -32,7 +29,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
     }
 
     @Override
-    public User findUserById(Long id) {
+    public User findById(Long id) {
         return userDao.findById(id).get();
     }
 
@@ -65,7 +62,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
     }
 
     @Override
-    public User findUserByUsername(String username) {
+    public User findByUsername(String username) {
         return userDao.findByUsername(username);
     }
 

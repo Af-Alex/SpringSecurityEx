@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+      lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Edit user</title>
@@ -11,13 +11,6 @@
 <h1>Edit User</h1></p>
 <form th:action="@{/admin/edit/{id}(id=${user.id})}" th:method="PUT" th:object="${user}">
 
-    <label for="username">Username</label>
-    <input th:value="*{username}"
-           th:field="*{username}"
-           th:type="text"
-           id="username"
-           required/>
-    <br>
     <label for="firstName">First name</label>
     <input th:value="*{firstName}"
            th:field="*{firstName}"
@@ -39,8 +32,8 @@
            id="age"/>
     <br>
     <label for="email">Email</label>
-    <input th:value="*{email}"
-           th:field="*{email}"
+    <input th:value="*{username}"
+           th:field="*{username}"
            th:type="email"
            id="email"
            required/>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+      lang="en">
 <head>
     <title>Admin panel</title>
 </head>
@@ -8,27 +8,23 @@
 <p><h1>Add new User</h1></p>
 <form th:action="@{/admin/new}" th:method="POST" th:object="${user}">
 
-    <label for="username">Enter username</label>
-    <input th:type="text" th:field="*{username}" id="username" required/>
-    <br>
-
-    <label for="firstName">Enter first name</label>
+    <label for="firstName">First name</label>
     <input type="text" th:field="*{firstName}" id="firstName" required/>
     <br>
 
-    <label for="lastName">Enter last name</label>
+    <label for="lastName">Last name</label>
     <input type="text" th:field="*{lastName}" id="lastName" required/>
     <br>
 
-    <label for="age">Enter age</label>
+    <label for="age">Age</label>
     <input type="number" th:field="*{age}" id="age" required/>
     <br>
 
-    <label for="email">Enter e-mail</label>
-    <input type="email" th:field="*{email}" id="email" required/>
+    <label for="email">Email</label>
+    <input type="email" th:field="*{username}" id="email" required/>
     <br>
 
-    <label for="password">Enter password</label>
+    <label for="password">Password</label>
     <input type="text" th:field="*{password}" id="password" required/>
     <br>
 
@@ -41,7 +37,7 @@
     </select>
     <br>
 
-    <input type="submit" value="Add user!"/>
+    <input type="submit" value="Add new user"/>
 </form>
 <hr>
 <form th:action="@{/logout}" method="POST">

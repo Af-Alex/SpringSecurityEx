@@ -1,16 +1,12 @@
 package ru.kata.spring.boot_security.demo.model;
 
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.springframework.lang.NonNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -19,11 +15,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
-
-    @Column(name = "username")
-    private String username;
 
     @Column(name = "first_name")
     private String firstName;
@@ -34,15 +26,15 @@ public class User implements UserDetails {
     @Column(name = "age")
     private Byte age;
 
-    @Column(name = "email", unique = true)
-    private String email;
+    @Column(name = "email", unique = true, nullable = false)
+    private String username;
 
     @Column(name = "password")
     private String password;
 
-    @ManyToMany
-    @Fetch(FetchMode.JOIN)
-    @JoinTable(name = "users_roles",
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
@@ -50,12 +42,11 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String username, String firstName, String lastName, Byte age, String email, String password, Set<Role> roles) {
-        this.username = username;
+    public User(String firstName, String lastName, Byte age, String email, String password, Set<Role> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
-        this.email = email;
+        this.username = email;
         this.password = password;
         this.roles = roles;
     }
@@ -66,15 +57,6 @@ public class User implements UserDetails {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String firstName) {
-        this.username = firstName;
     }
 
     public String getFirstName() {
@@ -101,12 +83,13 @@ public class User implements UserDetails {
         this.age = age;
     }
 
-    public String getEmail() {
-        return email;
+    @Override
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
@@ -166,14 +149,5 @@ public class User implements UserDetails {
         return getId().hashCode();
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", age=" + age +
-                ", email='" + email + '\'' +
-                '}';
-    }
+
 }
